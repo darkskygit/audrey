@@ -43,7 +43,7 @@ fn main() {
     // A function for writing to the `cpal::Buffer`, whatever the default sample type may be.
     fn write_to_buffer<S, I>(mut buffer: cpal::OutputBuffer<S>, channels: usize, sine: &mut I)
     where
-        S: cpal::Sample + audrey::sample::FromSample<i16>,
+        S: cpal::Sample + audrey::sample::sample::FromSample<i16>,
         I: Iterator<Item = [i16; 2]>,
     {
         match channels {

@@ -11,24 +11,26 @@ use hound;
 #[cfg(feature = "ogg_vorbis")]
 use lewton;
 
+use sample::sample::{FromSample, I24};
+
 /// Types to which read samples may be converted via the `Reader::samples` method.
 pub trait Sample:
     sample::Sample
-    + sample::FromSample<i8>
-    + sample::FromSample<i16>
-    + sample::FromSample<sample::I24>
-    + sample::FromSample<i32>
-    + sample::FromSample<f32>
+    + FromSample<i8>
+    + FromSample<i16>
+    + FromSample<I24>
+    + FromSample<i32>
+    + FromSample<f32>
 {
 }
 
 impl<T> Sample for T where
     T: sample::Sample
-        + sample::FromSample<i8>
-        + sample::FromSample<i16>
-        + sample::FromSample<sample::I24>
-        + sample::FromSample<i32>
-        + sample::FromSample<f32>
+        + FromSample<i8>
+        + FromSample<i16>
+        + FromSample<I24>
+        + FromSample<i32>
+        + FromSample<f32>
 {
 }
 
@@ -478,7 +480,7 @@ where
                     WavSamples::I24(ref mut samples) => samples.next().map(|sample| {
                         sample
                             .map_err(FormatError::Wav)
-                            .map(sample::I24::new_unchecked)
+                            .map(I24::new_unchecked)
                             .map(sample::Sample::to_sample)
                     }),
                     WavSamples::I32(ref mut samples) => next_sample!(samples),
@@ -537,11 +539,11 @@ where
             Some(Ok(sample)) => sample,
             Some(Err(error)) => {
                 result = FrameConstruction::Err(error);
-                <F::Sample as sample::Sample>::equilibrium()
+                <F::Sample as sample::Sample>::EQUILIBRIUM
             }
             None => {
                 result = FrameConstruction::NotEnoughSamples;
-                <F::Sample as sample::Sample>::equilibrium()
+                <F::Sample as sample::Sample>::EQUILIBRIUM
             }
         });
 

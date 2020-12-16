@@ -1,4 +1,4 @@
-pub extern crate sample;
+pub extern crate dasp as sample;
 
 #[cfg(feature = "alac")]
 pub extern crate alac;

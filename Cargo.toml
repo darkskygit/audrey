@@ -15,13 +15,13 @@ edition = "2018"
 [dependencies]
 claxon = { optional = true, version = "0.4" }
 hound = { optional = true, version = "3" }
-lewton = { optional = true, version = "0.9" }
+lewton = { optional = true, version = "0.10.1" }
 caf = { optional = true, version = "0.1" }
 alac = { optional = true, version = "0.5" }
-sample = "0.10"
+dasp = { git = "https://github.com/rustaudio/dasp" }
 
 [dev-dependencies]
-cpal = "0.10"
+cpal = "0.11.0"
 
 [features]
 default = ["flac", "ogg_vorbis", "wav", "caf_alac"]
